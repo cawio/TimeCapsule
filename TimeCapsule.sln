@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TimeCapsule.WebApi", "TimeCapsule.WebApi\TimeCapsule.WebApi.csproj", "{D66BD446-EDFE-4812-963B-B10ACA954AB0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TimeCapsule.Data", "TimeCapsule.Data\TimeCapsule.Data.csproj", "{AFB26829-11ED-4DD7-8C8C-C500C8AAC112}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D66BD446-EDFE-4812-963B-B10ACA954AB0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D66BD446-EDFE-4812-963B-B10ACA954AB0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D66BD446-EDFE-4812-963B-B10ACA954AB0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D66BD446-EDFE-4812-963B-B10ACA954AB0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AFB26829-11ED-4DD7-8C8C-C500C8AAC112}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AFB26829-11ED-4DD7-8C8C-C500C8AAC112}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AFB26829-11ED-4DD7-8C8C-C500C8AAC112}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AFB26829-11ED-4DD7-8C8C-C500C8AAC112}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,6 @@
+@TimeCapsule.WebApi_HostAddress = http://localhost:5076
+
+GET {{TimeCapsule.WebApi_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
