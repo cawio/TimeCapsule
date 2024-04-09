@@ -1,11 +1,12 @@
 ﻿using TimeCapsule.WebApi.Contracts.Data;
 using TimeCapsule.WebApi.Contracts.Requests;
 using TimeCapsule.WebApi.Contracts.Responses;
+using TimeCapsule.WebApi.Extensions.Responses;
 using TimeCapsule.WebApi.Repositories;
 
 namespace TimeCapsule.WebApi.Services;
 
-public class TimeCapsuleService(TimeCapsuleRepository timeCapsuleRepository)
+public class TimeCapsuleService(TimeCapsuleRepository capsuleRepository)
 {
     public async Task<CreateTimeCapsuleResponse> CreateTimeCapsule(CreateTimeCapsuleRequest request)
     {
@@ -17,7 +18,7 @@ public class TimeCapsuleService(TimeCapsuleRepository timeCapsuleRepository)
             TimeOfOpening = request.TimeOfOpening,
         };
 
-        var createdTimeCapsule = await timeCapsuleRepository.CreateTimeCapsule(timeCapsule);
+        var createdTimeCapsule = await capsuleRepository.CreateTimeCapsule(timeCapsule);
 
         return new CreateTimeCapsuleResponse
         {
@@ -29,35 +30,38 @@ public class TimeCapsuleService(TimeCapsuleRepository timeCapsuleRepository)
         };
     }
 
-    public async Task<GetTimeCapsulesResponse> GetTimeCapsules()
+    public async Task<GetAllTimeCapsulesResponse> GetTimeCapsules()
     {
-        var timeCapsules = await timeCapsuleRepository.GetTimeCapsules();
+        var timeCapsules = await capsuleRepository.GetTimeCapsules();
 
-        return new GetTimeCapsulesResponse
+        return new GetAllTimeCapsulesResponse
         {
-            TimeCapsules = timeCapsules.Select(tc => new TimeCapsuleDto
+            TimeCapsules = timeCapsules.Select(tc => new TimeCapsuleResponse
             {
-                Id = tc.Id.ToString(),
-                Title = tc.Title,
-                Description = tc.Description,
-                TimeOfCreation = tc.TimeOfCreation,
-                TimeOfOpening = tc.TimeOfOpening,
+                TimeCapsule = new TimeCapsuleDto
+                {
+                    Id = tc.Id.ToString(),
+                    Title = tc.Title,
+                    Description = tc.Description,
+                    TimeOfCreation = tc.TimeOfCreation,
+                    TimeOfOpening = tc.TimeOfOpening,
+                },
             }).ToList(),
         };
     }
 
-    public async Task<GetTimeCapsuleResponse> GetTimeCapsule(int id)
+    public async Task<TimeCapsuleResponse?> GetTimeCapsule(int id)
     {
-        var timeCapsule = await timeCapsuleRepository.GetTimeCapsule(id);
+        var timeCapsule = await capsuleRepository.GetTimeCapsule(id);
 
-        if (timeCapsule is null)
+        if (timeCapsule == null)
         {
-            return new GetTimeCapsuleResponse();
+            return null;
         }
 
-        return new GetTimeCapsuleResponse
+        return new TimeCapsuleResponse
         {
-            Capsule = new TimeCapsuleDto
+            TimeCapsule = new TimeCapsuleDto
             {
                 Id = timeCapsule.Id.ToString(),
                 Title = timeCapsule.Title,
@@ -67,8 +71,47 @@ public class TimeCapsuleService(TimeCapsuleRepository timeCapsuleRepository)
             },
         };
     }
-}
 
-public class GetTimeCapsuleResponse
-{
+    public async Task<bool> DeleteTimeCapsule(int id)
+    {
+        return await capsuleRepository.DeleteTimeCapsule(id);
+    }
+
+    public async Task<TimeCapsuleResponse?> UpdateTimeCapsule(UpdateTimeCapsuleRequest request)
+    {
+        var success = int.TryParse(request.Id, out var parsedId);
+        if (!success)
+        {
+            return null;
+        }
+
+        var timeCapsule = await capsuleRepository.GetTimeCapsule(parsedId);
+        if (timeCapsule == null)
+        {
+            return null;
+        }
+
+        var updatedTimeCapsule = new Data.Models.TimeCapsule
+        {
+            Id = parsedId,
+            Title = request.Title ?? timeCapsule.Title,
+            Description = request.Description ?? timeCapsule.Description,
+            TimeOfCreation = timeCapsule.TimeOfCreation,
+            TimeOfOpening = request.OpenDate ?? timeCapsule.TimeOfOpening,
+        };
+
+        updatedTimeCapsule = await capsuleRepository.UpdateTimeCapsule(updatedTimeCapsule);
+
+        return new TimeCapsuleResponse
+        {
+            TimeCapsule = new TimeCapsuleDto
+            {
+                Id = updatedTimeCapsule.Id.ToString(),
+                Title = updatedTimeCapsule.Title,
+                Description = updatedTimeCapsule.Description,
+                TimeOfCreation = updatedTimeCapsule.TimeOfCreation,
+                TimeOfOpening = updatedTimeCapsule.TimeOfOpening,
+            },
+        };
+    }
 }

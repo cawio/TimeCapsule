@@ -1,0 +1,29 @@
+version: '3.8'
+services:
+  webapp:
+    build: ./TimeCapsule.WebApi
+    ports:
+      - "8000:80"
+    volumes:
+      - .:/app
+      - dotnetnuget:/root/.nuget/
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings__DefaultConnection=Server=db;Port=3306;Database=mydb;User=root;Password=yourpassword;
+    depends_on:
+      - db
+
+  db:
+    image: mariadb
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: yourpassword
+      MYSQL_DATABASE: mydb
+    ports:
+      - "3306:3306"
+    volumes:
+      - dbdata:/var/lib/mysql
+
+volumes:
+  dbdata:
+  dotnetnuget:

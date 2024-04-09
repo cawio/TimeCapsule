@@ -4,5 +4,5 @@ namespace TimeCapsule.WebApi.Extensions.Responses;
 
 public class TimeCapsuleResponse
 {
-    TimeCapsuleDto TimeCapsule { get; init; } = new();
+    public TimeCapsuleDto TimeCapsule { get; init; } = new();
 }

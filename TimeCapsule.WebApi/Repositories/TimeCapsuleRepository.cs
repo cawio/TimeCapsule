@@ -31,9 +31,18 @@ public class TimeCapsuleRepository(TimeCapsuleDb db)
         return timeCapsule;
     }
 
-    public async Task DeleteTimeCapsule(Data.Models.TimeCapsule timeCapsule)
+    public async Task<bool> DeleteTimeCapsule(int id)
     {
+        var timeCapsule = await db.TimeCapsules.FindAsync(id);
+
+        if (timeCapsule == null)
+        {
+            return false;
+        }
+
         db.TimeCapsules.Remove(timeCapsule);
         await db.SaveChangesAsync();
+
+        return true;
     }
 }
