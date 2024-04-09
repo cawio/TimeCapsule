@@ -36,17 +36,22 @@ public class TimeCapsuleService(TimeCapsuleRepository capsuleRepository)
 
         return new GetAllTimeCapsulesResponse
         {
-            TimeCapsules = timeCapsules.Select(tc => new TimeCapsuleResponse
-            {
-                TimeCapsule = new TimeCapsuleDto
-                {
-                    Id = tc.Id.ToString(),
-                    Title = tc.Title,
-                    Description = tc.Description,
-                    TimeOfCreation = tc.TimeOfCreation,
-                    TimeOfOpening = tc.TimeOfOpening,
-                },
-            }).ToList(),
+            TimeCapsules = timeCapsules
+                .Select(
+                    tc =>
+                        new TimeCapsuleResponse
+                        {
+                            TimeCapsule = new TimeCapsuleDto
+                            {
+                                Id = tc.Id.ToString(),
+                                Title = tc.Title,
+                                Description = tc.Description,
+                                TimeOfCreation = tc.TimeOfCreation,
+                                TimeOfOpening = tc.TimeOfOpening,
+                            },
+                        }
+                )
+                .ToList(),
         };
     }
 
@@ -91,26 +96,19 @@ public class TimeCapsuleService(TimeCapsuleRepository capsuleRepository)
             return null;
         }
 
-        var updatedTimeCapsule = new Data.Models.TimeCapsule
-        {
-            Id = parsedId,
-            Title = request.Title ?? timeCapsule.Title,
-            Description = request.Description ?? timeCapsule.Description,
-            TimeOfCreation = timeCapsule.TimeOfCreation,
-            TimeOfOpening = request.OpenDate ?? timeCapsule.TimeOfOpening,
-        };
-
-        updatedTimeCapsule = await capsuleRepository.UpdateTimeCapsule(updatedTimeCapsule);
+        timeCapsule.Title = request.Title ?? timeCapsule.Title;
+        timeCapsule.Description = request.Description ?? timeCapsule.Description;
+        timeCapsule.TimeOfOpening = request.OpenDate ?? timeCapsule.TimeOfOpening;
 
         return new TimeCapsuleResponse
         {
             TimeCapsule = new TimeCapsuleDto
             {
-                Id = updatedTimeCapsule.Id.ToString(),
-                Title = updatedTimeCapsule.Title,
-                Description = updatedTimeCapsule.Description,
-                TimeOfCreation = updatedTimeCapsule.TimeOfCreation,
-                TimeOfOpening = updatedTimeCapsule.TimeOfOpening,
+                Id = timeCapsule.Id.ToString(),
+                Title = timeCapsule.Title,
+                Description = timeCapsule.Description,
+                TimeOfCreation = timeCapsule.TimeOfCreation,
+                TimeOfOpening = timeCapsule.TimeOfOpening,
             },
         };
     }

@@ -5,7 +5,7 @@ using TimeCapsule.WebApi.Services;
 
 namespace TimeCapsule.WebApi;
 
-[HttpPut("/time-capsules"), AllowAnonymous]
+[HttpPut("/time-capsules")]
 public class UpdateTimeCapsuleEndpoint(TimeCapsuleService capsuleService) : Endpoint<UpdateTimeCapsuleRequest, TimeCapsuleResponse>
 {
     public override async Task HandleAsync(UpdateTimeCapsuleRequest req, CancellationToken ct)

@@ -6,10 +6,15 @@ using TimeCapsule.WebApi.Services;
 
 namespace TimeCapsule.WebApi.Endpoints.TimeCapsuleEndpoints;
 
-[HttpGet("/time-capsules/{id}"), AllowAnonymous]
 public class GetTimeCapsuleEndpoint(TimeCapsuleService capsuleService)
     : Endpoint<GetTimeCapsuleRequest, TimeCapsuleResponse>
 {
+    public override void Configure()
+    {
+        Get("/time-capsules/{id}");
+        ResponseCache(60);
+    }
+
     public override async Task HandleAsync(GetTimeCapsuleRequest request, CancellationToken ct)
     {
         var success = int.TryParse(request.Id, out var parsedId);

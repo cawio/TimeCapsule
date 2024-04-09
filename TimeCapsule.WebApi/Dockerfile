@@ -18,4 +18,4 @@ ENV ASPNETCORE_ENVIRONMENT Production
 EXPOSE 8080
 WORKDIR /app
 COPY --from=build /app .
-ENTRYPOINT [ "dotnet", "Guestbook.dll" ]
+ENTRYPOINT [ "dotnet", "TimeCapsule.WebApi.dll" ]

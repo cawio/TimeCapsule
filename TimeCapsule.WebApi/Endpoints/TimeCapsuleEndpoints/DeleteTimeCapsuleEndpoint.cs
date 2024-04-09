@@ -4,7 +4,7 @@ using TimeCapsule.WebApi.Services;
 
 namespace TimeCapsule.WebApi;
 
-[HttpDelete("/time-capsules/{id}"), AllowAnonymous]
+[HttpDelete("/time-capsules/{id}")]
 public class DeleteTimeCapsuleEndpoint(TimeCapsuleService capsuleService) : Endpoint<DeleteTimeCapsuleRequest>
 {
     public override async Task HandleAsync(DeleteTimeCapsuleRequest request, CancellationToken ct)

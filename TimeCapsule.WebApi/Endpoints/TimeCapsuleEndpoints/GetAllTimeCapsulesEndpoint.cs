@@ -4,7 +4,7 @@ using TimeCapsule.WebApi.Services;
 
 namespace TimeCapsule.WebApi;
 
-[HttpGet("/time-capsules"), AllowAnonymous]
+[HttpGet("/time-capsules")]
 public class GetAllTimeCapsulesEndpoint(TimeCapsuleService capsuleService) : EndpointWithoutRequest<GetAllTimeCapsulesResponse>
 {
     public override async Task HandleAsync(CancellationToken ct)

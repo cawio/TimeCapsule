@@ -1,6 +1,43 @@
-@TimeCapsule.WebApi_HostAddress = http://localhost:5076
+@TimeCapsuleWebApi_HostAddress = http://localhost:5076
 
-GET {{TimeCapsule.WebApi_HostAddress}}/weatherforecast/
+GET {{TimeCapsuleWebApi_HostAddress}}/time-capsules/
+Accept: application/json
+
+###
+
+@TimeCapsuleId = 2
+GET {{TimeCapsuleWebApi_HostAddress}}/time-capsules/{{TimeCapsuleId}}
+Accept: application/json
+
+###
+
+POST {{TimeCapsuleWebApi_HostAddress}}/time-capsules/
+Content-Type: application/json
+Accept: application/json
+
+{
+    "title": "Time Capsule",
+    "description": "This is a time capsule",
+    "openDate": "2021-12-31T23:59:59"
+}
+
+###
+
+PUT {{TimeCapsuleWebApi_HostAddress}}/time-capsules/
+Content-Type: application/json
+Accept: application/json
+
+{
+    "id": "1",
+    "title": "Time Capsule (updated)",
+    "description": "This is a time capsule",
+    "openDate": "2021-12-31T23:59:59"
+}
+
+###
+
+@IdToDelete = 1
+DELETE {{TimeCapsuleWebApi_HostAddress}}/time-capsules/{{IdToDelete}}
 Accept: application/json
 
 ###

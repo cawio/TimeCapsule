@@ -6,7 +6,7 @@ using TimeCapsule.WebApi.Services;
 
 namespace TimeCapsule.WebApi.Endpoints.TimeCapsuleEndpoints;
 
-[HttpPost("/time-capsules"), AllowAnonymous]
+[HttpPost("/time-capsules")]
 public class CreateTimeCapsuleEndpoint(TimeCapsuleService capsuleService) : Endpoint<CreateTimeCapsuleRequest, CreateTimeCapsuleResponse>
 {
     public override async Task HandleAsync(CreateTimeCapsuleRequest request, CancellationToken ct)

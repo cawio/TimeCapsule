@@ -1,6 +1,6 @@
 version: '3.8'
 services:
-  webapp:
+  web-api:
     build: ./TimeCapsule.WebApi
     ports:
       - "8000:80"
